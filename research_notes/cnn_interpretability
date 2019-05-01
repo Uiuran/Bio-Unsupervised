@@ -1,0 +1,18 @@
+Building Blocks Interpretability
+
+- Using Lucid Tensorflow lib for interpretability.
+
+- Feature Vision
+
+- Attribution
+
+- Groups Analysis (Groups aka Receptive Local Fields)
+  -- On groups collection of neurons and channels, or Receptive Local Fields to not confuse groups with mathematical concept of group. Use of Lucid lib to divide channels of neurons in sets of relevant activating neurons for a semantic analytics.
+
+- Semantic Dictionaries
+
+  -- Receptive Local Fields 
+    Build a dictionary for each layer analysed.
+
+  -- Pathways (Layer to Layer Maximal Activation).
+    From a layer-wise dictionary, build a dictionary of possible paths of relevant pattern activation.

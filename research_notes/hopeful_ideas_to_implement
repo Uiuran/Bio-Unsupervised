@@ -1,0 +1,8 @@
+- Calculus of Metrics from Receptive Fields and Pathways Dictionaries ( RFD and PD).
+
+  --Try to use Mutual Information or KL-Divergence. 
+
+- The use of Unsupervised Algorithms to select relevant pattern in RFD and PD.
+  -- Genetic Algorithms to inter-breed pattern in a RFD and build a PD, using the previous topic as fitness value. Use GA to create hybrid models from a PD. Use Re-inforcement Learning to distinguish between PD values that better perform some target semantic identification.
+
+- Training specific pathways for pattern identification and freezing other neuronal links in SGD or doing it less relevant for the learning performance.
