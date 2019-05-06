@@ -1,8 +1,43 @@
 Building Blocks Interpretability
 
+
 - Using Lucid Tensorflow lib for interpretability.
 
+# Install Lucid
+
+!pip install --quiet lucid==0.2.3
+#!pip install --quiet --upgrade-strategy=only-if-needed git+https://github.com/tensorflow/lucid.git
+
+# Imports
+
+import lucid.modelzoo.vision_models as models
+from lucid.modelzoo.vision_base import Model
+from lucid.misc.io import show
+import lucid.optvis.objectives as objectives
+import lucid.optvis.param as param
+import lucid.optvis.render as render
+import lucid.optvis.transform as transform
+
+
 - Feature Vision
+
+# Define model with input placeholder information. Use Model inheritance to do so, using load_graphdef() function, to use Model.pb.modelzoo graphdef
+
+class VGG(Model):
+  model_path = '/content/model/Model.pb.modelzoo'
+  image_shape = [224, 224, 3]
+  image_value_range = (0, 1)
+  image
+  input_name = 'input_1'
+
+# Load Model with objective optimization. Can use dashiet objective you think suits your network hacking research better
+
+model = VGG()
+model.load_graphdef()
+channel = lambda n: objectives.channel("block5_conv4/convolution", n)
+obj = channel(511) + channel(411) + channel(311) + channel(211)
+_ = render.render_vis(model, obj)
+
 
 - Attribution
 
@@ -16,3 +51,10 @@ Building Blocks Interpretability
 
   -- Pathways (Layer to Layer Maximal Activation).
     From a layer-wise dictionary, build a dictionary of possible paths of relevant pattern activation.
+
+
+- References
+
+
+[1] Import graph into modelzoo https://colab.research.google.com/drive/1PPzeZi5sBN2YRlBmKsdvZPbfYtZI-pHl#scrollTo=-fsb8JBZ6d_C
+[2] Visualization of Features  https://colab.research.google.com/drive/1PPzeZi5sBN2YRlBmKsdvZPbfYtZI-pHl#scrollTo=-fsb8JBZ6d_C
