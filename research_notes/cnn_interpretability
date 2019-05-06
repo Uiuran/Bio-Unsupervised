@@ -16,37 +16,47 @@ from lucid.misc.io import show
 import lucid.optvis.objectives as objectives
 import lucid.optvis.param as param
 import lucid.optvis.render as render
+from lucid.optvis.render import import_model, make_transform_f, make_optimizer, gradient_override_map, redirected_relu_grad, redirected_relu6_grad, make_print_objective_func
 import lucid.optvis.transform as transform
+from tensorflow.train import AdamOptimizer as Adam
 
+# Every non-imported function can be find in an explicitly hacked in the notebook.
 
 - Feature Vision
 
-# Define model with input placeholder information. Use Model inheritance to do so, using load_graphdef() function, to use Model.pb.modelzoo graphdef
+# Define model with input placeholder information. Use Model inheritance to do so, using load_graphdef() function, to use Model.pb graphdef
 
 class VGG(Model):
-  model_path = '/content/model/Model.pb.modelzoo'
-  image_shape = [224, 224, 3]
+  model_path = '/content/model/Model.pb'
+  image_shape = [1,224, 224, 3]
   image_value_range = (0, 1)
   image
   input_name = 'input_1'
 
-# Load Model with objective optimization. Can use dashiet objective you think suits your network hacking research better
+# [1] Load Model with objective optimization. Can use dashiet objective you think suits your network hacking research better.
 
 model = VGG()
-model.load_graphdef()
-channel = lambda n: objectives.channel("block5_conv4/convolution", n)
-obj = channel(511) + channel(411) + channel(311) + channel(211)
-_ = render.render_vis(model, obj)
+with TF.Graph().as_default() as graph, TF.Session().as_default() as sess:  
+  model.load_graphdef()
+  graph_def = model.graph_def
+  t_input = TF.placeholder(np.float32, name='input_1')
+  t_preprocessed = TF.expand_dims(t_input, 0)
+  TF.import_graph_def(graph_def, {'input_1':t_preprocessed} )  
+  channel = lambda n: objectives.channel("block5_conv4/convolution", n)
+  obj = channel(511) + channel(411) + channel(311) + channel(211)
+  attribution0(batch,obj, optmization_steps = 512, fft_steps = 1, with_fft= False, verbose = True, param_f = 'random')
 
 
 - Attribution
+   Have an attribuition function for any pre-trained model to be loaded with Lucid and auxiliary functions (Tensorflow initializators, tensor lists, graph displayer and so on)
+   Must insert the multi-scale deep dream visualization algorithm [3] within the function. Laplacian-norm.
 
-- Groups Analysis (Groups aka Receptive Local Fields)
-  -- On groups collection of neurons and channels, or Receptive Local Fields to not confuse groups with mathematical concept of group. Use of Lucid lib to divide channels of neurons in sets of relevant activating neurons for a semantic analytics.
+- Groups Analysis (Groups aka Receptive Local Fields) [4]
+   On groups collection of neurons and channels, or Receptive Local Fields to not confuse groups with mathematical concept of group. Use of Lucid lib to divide channels of neurons in sets of relevant activating neurons for a semantic analytics.
 
 - Semantic Dictionaries
 
-  -- Receptive Local Fields 
+  -- Receptive Local Fields [4] 
     Build a dictionary for each layer analysed.
 
   -- Pathways (Layer to Layer Maximal Activation).
@@ -58,3 +68,5 @@ _ = render.render_vis(model, obj)
 
 [1] Import graph into modelzoo https://colab.research.google.com/drive/1PPzeZi5sBN2YRlBmKsdvZPbfYtZI-pHl#scrollTo=-fsb8JBZ6d_C
 [2] Visualization of Features  https://colab.research.google.com/drive/1PPzeZi5sBN2YRlBmKsdvZPbfYtZI-pHl#scrollTo=-fsb8JBZ6d_C
+[3] Deep Dream https://nbviewer.jupyter.org/github/tensorflow/tensorflow/blob/master/tensorflow/examples/tutorials/deepdream/deepdream.ipynb#naive
+[4] RLF https://colab.research.google.com/github/tensorflow/lucid/blob/master/notebooks/building-blocks/NeuronGroups.ipynb#scrollTo=AA17rJBLuyYH
