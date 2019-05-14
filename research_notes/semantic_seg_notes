@@ -1,0 +1,42 @@
+Semantic Segmentation
+
+1.0 Basics
+
+Pixel-Wise Semantic (some class or other semantic entity {1}) inputation, matching or coloring. In DNN this correspond simply to put a softmax (probability detector) unit to each pixel in each channel of the input. 
+
+Coloring may also be association between any other unsupervised entity that will define color (i.e. without the supervised part of the classification. E.G dimensionality reduction algorithms + softmax units. 
+
+2.0 Architecture
+
+2.1 Architectural Basics
+
+Image input decimation/down-sampling may turn-out to filter important scale-wise details from each channel/feature detector in a DCNN. E.G. Striding more than 1 pixel, convolutions will render a smaller hidden layer output, if you do padding to have SAME size hiddenlayer output then you will have subsampled the image details.
+
+With striding S = 1 pixel to render hidden output shape == input shape (i.e. minimal padding setted to SAME), then you will have same spatial resolution according to conv size (h,w) and deepeness, what renders some memory overload.
+
+2.2 Encode-Decode
+
+The usual auto-encoder architecture come to hand in order to compress information. First block downsamples the input spatially and enlarges the number of channels in each layer. The in-between encode-decode block space is an layer of output vector with each channel being a feature of the image. The decode block just upsamples the feature vector spatially by using transpose convolution.
+
+2.3 No Fully-Connected Layer to Softmax
+
+The previous described architecture wont have a softmax vector of the size of the class-labels on-top of the net, since it will have to apply a Size-of-the-Input x Number-of-Semantic-Entities predictor (possibly softmax, but not necessarily) on-top of the net.
+
+2.4 ResNet Blocks and Atrous Blocks(Space Multi-Scale Receptive Fields)
+
+#TODO
+
+3.0 Training 
+
+Training of Segmentation tasks supposes you provide a map of Size-of-the-Input x Number-of-Semantic-Entities called Ground Truth in the literature, calculate pixel-wise entropy loss and backprop. The training of previous given architecture can be done in Transfer Learning mood, just stacking the predictor ontop and then training for its connections to the freezed network model.
+
+4.0 Accuracy Metrics
+
+The prediction accuracy must be measured pixel-wisely as usual (infering a accuracy margin and so on).
+
+{1} TODO: possible semantical entities, language theory and its computational encodes and so on.
+{2} TODO: Other more academic references, although academic C Sci papers sux, too bad writting level.
+
+References
+
+https://medium.freecodecamp.org/diving-into-deep-convolutional-semantic-segmentation-networks-and-deeplab-v3-4f094fa387df

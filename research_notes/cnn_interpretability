@@ -54,6 +54,8 @@ with TF.Graph().as_default() as graph, TF.Session().as_default() as sess:
 - Groups Analysis (Groups aka Receptive Local Fields) [4]
    On groups collection of neurons and channels, or Receptive Local Fields to not confuse groups with mathematical concept of group. Use of Lucid lib to divide channels of neurons in sets of relevant activating neurons for a semantic analytics.
 
+  Cognitive Interface -> Reification of Hidden Layers Abstractions (Concept based patterns ?)
+
 - Semantic Dictionaries
 
   -- Receptive Local Fields [4] 
