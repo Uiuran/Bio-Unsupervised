@@ -1,0 +1,9 @@
+1. Camadas subsequentes de frequencias convoluidas com gated (att: gcnn ) sincronizadas com kernel gauss de media e std diferentes pra  cada elemento ao redor (escolher radius).
+
+2. evoluir temporalmente frequencias, volta. Retorna N -> numero de clusteres sincronizados
+
+3. Voltar pra 1
+
+4. Fazer decoder e treinar 
+
+#TODO - É possivel fazer o Autoencoder após sincronicidade ou se perde informacao da foto ? caso nao seja possivel, sincronicidade pode ser estimador de numeros de frequencias reais finitas.
