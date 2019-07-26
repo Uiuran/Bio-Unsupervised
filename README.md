@@ -14,7 +14,7 @@ Pattern Matching Algorithms for Biological and Artistical Inspired Images
 
 # DataAutoArch
 
-- Effort to do Autographing with the above protocol (HPP TLP) with Semi-Supervised (Naturaly Supervised) Learning, Unsupervised Learning. An Effort To Give the DATA all the AsSETS. 
+- Effort to do Autographing with the above protocol (HPP TLP) with Semi-Supervised (Naturaly Supervised as mentioned by (((ل()(ل() 'yoav))) Learning, Unsupervised Learning. An Effort To Give the DATA all the AsSETS [FUTURE]. 
 
 ** References
 
